@@ -7,7 +7,8 @@ enum NotificationStatusEnum: string
     case PENDING = '1';
     case SUCCESS = '2';
     case ERROR = '3';
-    case CANCELED = '4';
+    case FAILED = '4';
+    case CANCELED = '5';
 
     public function getName(): string
     {
@@ -15,6 +16,7 @@ enum NotificationStatusEnum: string
             self::PENDING => 'Pending',
             self::SUCCESS => 'Success',
             self::ERROR => 'Error',
+            self::FAILED => 'Failed',
             self::CANCELED => 'Canceled',
             default => 'Status não encontrado'
         };
@@ -26,6 +28,7 @@ enum NotificationStatusEnum: string
             self::PENDING => 'Pending',
             self::SUCCESS => 'Success',
             self::ERROR => 'Error',
+            self::FAILED => 'Failed',
             self::CANCELED => 'Canceled',
             default => 'Status não encontrado'
         };
