@@ -46,7 +46,9 @@ class NotificationsController extends Controller
      */
     public function show(Notification $notification)
     {
-        //
+        return response()->json([
+            'data' => $notification
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -62,6 +64,10 @@ class NotificationsController extends Controller
      */
     public function destroy(Notification $notification)
     {
-        //
+        $notification->status = NotificationStatusEnum::CANCELED;
+        $notification->save();
+        return response()->json([
+            'message' => "Notificação deletada com sucesso"
+        ], Response::HTTP_OK);
     }
 }

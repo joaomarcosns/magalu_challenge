@@ -19,6 +19,16 @@ class Notification extends Model
         'status'
     ];
 
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'channel',
+        'status',
+    ];
+
     protected $casts = [
         'status' => NotificationStatusEnum::class,
         'channel' => NotificationChannelEnum::class

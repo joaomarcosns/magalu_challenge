@@ -18,5 +18,7 @@ Route::prefix('v1')->group(function () {
 
     Route::controller(NotificationsController::class)->prefix('notifications')->name('notifications.')->group(function () {
         Route::post('/', 'store');
+        Route::get('/{notification}', 'show');
+        Route::delete('/{notification}', 'destroy');
     });
 });
