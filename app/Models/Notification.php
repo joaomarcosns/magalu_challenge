@@ -39,6 +39,13 @@ class Notification extends Model
         'channel_label',
     ];
 
+    public function scopeIsPast($query)
+    {
+        return $query->where(function ($query) {
+            $query->where('send_at', '<=', now()->format('Y-m-d H:i'));
+        });
+    }
+
     public function getStatusLabelAttribute()
     {
         return NotificationStatusEnum::getLabel($this->status);
