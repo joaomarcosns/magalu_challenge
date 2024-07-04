@@ -19,7 +19,7 @@ class NotificationFactory extends Factory
     public function definition(): array
     {
         return [
-            'send_at' => $this->faker->dateTime(),
+            'send_at' => $this->faker->dateTimeBetween('now', '+1 month'),
             'destination' => $this->faker->email(),
             'message' => $this->faker->text(50),
             'channel' => $this->faker->randomElement([
