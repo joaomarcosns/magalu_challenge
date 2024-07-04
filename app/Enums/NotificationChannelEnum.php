@@ -30,4 +30,25 @@ enum NotificationChannelEnum: string
             default => 'Canal de notificação não reconhecido',
         };
     }
+
+    public static function all(): array
+    {
+        return [
+            self::EMAIL,
+            self::PUSH,
+            self::SMS,
+            self::WHATSAPP,
+        ];
+    }
+
+    public static function getValue($value)
+    {
+        return match ($value) {
+            "EMAIL" => self::EMAIL,
+            "PUSH" => self::PUSH,
+            "SMS" => self::SMS,
+            "WHATSAPP" => self::WHATSAPP,
+            default => 'Canal de notificação não reconhecido',
+        };
+    }
 }
