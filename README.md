@@ -1,66 +1,71 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://saolucascontabilidade.com.br/wp-content/uploads/2023/10/Sem-titulo-13-1.jpg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+    <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-%2304D361">
+    <img alt="Language: PHP" src="https://img.shields.io/badge/language-java-green">
+    <img alt="Version: 1.0" src="https://img.shields.io/badge/version-1.0-yellowgreen">
 </p>
 
-## About Laravel
+## About Magalu Challenge
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+**Welcome to our selection process**
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+**Scenario**
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Magalu faces the challenge of developing a communication platform. You have been chosen to start the development of the first sprint.
 
-## Learning Laravel
+**Requirements**
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **There must be an endpoint to receive a request for scheduling communication delivery (1):**
+  - This endpoint must have at least the following fields:
+    - Date/Time for delivery
+    - Recipient
+    - Message to be delivered
+  - The possible communications that can be sent are: email, SMS, push notifications, and WhatsApp.
+  - At this stage, we need this input channel to schedule the delivery. The actual delivery will not be developed at this stage, so you do not need to worry about that.
+  - For this sprint, it has been decided that the communication delivery scheduling request will be saved in the database. Therefore, as soon as you receive the scheduling request (1), it should be saved in the database.
+  - Consider the database structure carefully. Even though you will not handle the delivery, the structure should be ready so that your colleague does not need to make any changes when developing this functionality. The focus at the time of delivery will be on sending and updating the record status in the database.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- **There must be an endpoint to check the status of the scheduled communication delivery (2):**
+  - The scheduling will be done through endpoint (1), and the status check will be done through this other endpoint.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- **There must be an endpoint to remove a scheduled communication delivery.**
 
-## Laravel Sponsors
+**General Observations and Guidelines**
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- We prefer development in Java, Python, or Node, but any language can be used; just explain why you chose it.
+- Use one of the following databases:
+  - MySQL
+  - PostgreSQL
+- The APIs should follow the RESTful model with JSON format.
+- Perform unit tests, focusing on a well-organized test suite.
+- Follow what you consider best programming practices.
+- You are free to decide how to create the database and tables, whether via script, application, etc.
 
-### Premium Partners
+Your challenge should preferably be submitted as a public GIT repository (Github, Gitlab, Bitbucket), with small and well-described commits, or as a compressed file (ZIP or TAR). Your repository should include an open-source license model. Do not send any files other than the compressed code and its documentation. Be careful not to send images, videos, audio, binaries, etc.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+Follow good development, quality, and code governance practices. Guide the evaluators on how to install, test, and run your code: this can be in a README within the project.
 
-## Contributing
+We will evaluate your challenge according to the position and level you are applying for.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+We greatly appreciate your willingness to participate in our selection process and wish you to have fun and good luck :)
 
-## Code of Conduct
+## Sobre desafio Magalu PT-BR
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+<code>[Descrição em pt-br](./ABOUT.md)</code>
 
-## Security Vulnerabilities
+## Technologies
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+* PHP 8.3
+* Laravel
+* Redis
+* Docker
+* Laravel Sail
+* Laravel Horizon
+
+### References
+[Buildrun Tech!](https://www.youtube.com/@buildrun-tech?sub_confirmation=1)
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+[MIT license](https://opensource.org/licenses/MIT).
