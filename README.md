@@ -56,14 +56,21 @@ We greatly appreciate your willingness to participate in our selection process a
 
 ## Technologies
 
-* PHP 8.3
-* Laravel
-* Redis
-* Docker
-* Laravel Sail
-* Laravel Horizon
+- PHP 8.3
+- Laravel
+- Redis
+- Docker
+- Laravel Sail
+- Laravel Horizon
+
+### Feature
+
+|Testes|Validations|SMS Channel|PUSH Channel| Whatsapp Channel|
+|---|---|---|---|---|
+|&#x2610;|&#x2610;|&#x2610;|&#x2610;|&#x2610;|
 
 ### References
+
 [Buildrun Tech!](https://www.youtube.com/@buildrun-tech?sub_confirmation=1)
 
 ## License
