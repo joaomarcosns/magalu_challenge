@@ -302,3 +302,33 @@ it('returns 404 when notification does not exist', function () {
 
     $response->assertStatus(Response::HTTP_NOT_FOUND);
 });
+
+it('deletes a specific notification', function () {
+    // Criar uma notificação de exemplo no banco de dados
+    $notification = Notification::factory()->create();
+
+    $URL = '/api/v1/notifications/' . $notification->id;
+
+    $response = $this->deleteJson($URL);
+
+    $response->assertStatus(Response::HTTP_OK)
+        ->assertJson([
+            'message' => 'Notificação deletada com sucesso'
+        ]);
+
+    // Verificar se a notificação foi marcada como cancelada no banco de dados
+    $this->assertDatabaseHas('notifications', [
+        'id' => $notification->id,
+        'status' => NotificationStatusEnum::CANCELED->value,
+    ]);
+});
+
+it('returns 404 when trying to delete non-existing notification', function () {
+    $nonExistentId = 9999; // ID que não existe no banco de dados
+
+    $URL = '/api/v1/notifications/' . $nonExistentId;
+
+    $response = $this->deleteJson($URL);
+
+    $response->assertStatus(Response::HTTP_NOT_FOUND);
+});
