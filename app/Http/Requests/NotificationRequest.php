@@ -35,7 +35,8 @@ class NotificationRequest extends FormRequest
                 'required',
                 'string',
                 'max:255',
-                Rule::when($this->channel === 'EMAIL', ['email'])
+                Rule::when($this->channel === 'EMAIL', ['email']),
+                Rule::when($this->channel === 'SMS', ['regex:/^\+?[1-9]\d{1,14}$/'])
             ],
         ];
     }
