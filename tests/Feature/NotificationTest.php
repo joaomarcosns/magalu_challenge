@@ -296,7 +296,7 @@ it('returns a specific notification', function () {
 it('returns 404 when notification does not exist', function () {
     $nonExistentId = 9999;
 
-    $URL = '/api/v2/notifications/' . $nonExistentId;
+    $URL = '/api/v1/notifications/' . $nonExistentId;
 
     $response = $this->getJson($URL);
 
@@ -331,4 +331,77 @@ it('returns 404 when trying to delete non-existing notification', function () {
     $response = $this->deleteJson($URL);
 
     $response->assertStatus(Response::HTTP_NOT_FOUND);
+});
+
+it('updates a specific notification', function () {
+    $notification = Notification::factory()->create();
+    $faker = Faker::create();
+
+    $URL = '/api/v1/notifications/' . $notification->id;
+
+    // Dados para atualização
+    $updatedData = [
+        'send_at' => now()->addDays(2)->toDateTimeString(),
+        'destination' => $faker->e164PhoneNumber,
+        'message' => 'Updated Message',
+        'channel' => NotificationChannelEnum::SMS->name,
+    ];
+
+    $response = $this->putJson($URL, $updatedData);
+
+    $response->assertStatus(Response::HTTP_OK)
+        ->assertJson([
+            'message' => 'Notificação atualizada com sucesso'
+        ]);
+
+    // Verificar se a notificação foi atualizada corretamente no banco de dados
+    $this->assertDatabaseHas('notifications', [
+        'id' => $notification->id,
+        'send_at' => $updatedData['send_at'],
+        'destination' => $updatedData['destination'],
+        'message' => $updatedData['message'],
+        'channel' => NotificationChannelEnum::SMS->value,
+        'status' => NotificationStatusEnum::PENDING->value,
+    ]);
+});
+
+it('returns 404 when trying to update non-existing notification', function () {
+    $nonExistentId = 9999; // ID que não existe no banco de dados
+
+    $URL = '/api/v2/notifications/' . $nonExistentId;
+
+    $updatedData = [
+        'send_at' => now()->addDays(2)->toDateTimeString(),
+        'destination' => 'updated@example.com',
+        'message' => 'Updated Message',
+        'channel' => NotificationChannelEnum::EMAIL->value,
+    ];
+
+    $response = $this->putJson($URL, $updatedData);
+
+    $response->assertStatus(Response::HTTP_NOT_FOUND);
+});
+
+it('fails to update notification when status is canceled', function () {
+    // Criar uma notificação de exemplo cancelada no banco de dados
+    $notification = Notification::factory()->create([
+        'status' => NotificationStatusEnum::CANCELED->value,
+    ]);
+
+    $URL = '/api/v1/notifications/' . $notification->id;
+
+    // Dados para atualização (pode ser qualquer dado válido, pois o teste deve falhar)
+    $updatedData = [
+        'send_at' => now()->addDays(2)->toDateTimeString(),
+        'destination' => 'updated@example.com',
+        'message' => 'Updated Message',
+        'channel' => NotificationChannelEnum::EMAIL->name,
+    ];
+
+    $response = $this->putJson($URL, $updatedData);
+
+    $response->assertStatus(Response::HTTP_BAD_REQUEST)
+        ->assertJson([
+            'error' => 'Não é possível atualizar uma notificação cancelada'
+        ]);
 });
