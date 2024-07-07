@@ -7,6 +7,7 @@ use Illuminate\Testing\Fluent\AssertableJson;
 use Symfony\Component\HttpFoundation\Response;
 use App\Enums\NotificationChannelEnum;
 use App\Enums\NotificationStatusEnum;
+use Carbon\Carbon;
 use Faker\Factory as Faker;
 
 uses(RefreshDatabase::class);
@@ -265,4 +266,39 @@ it('fails to create a notification with invalid data', function () {
     $this->assertDatabaseMissing('notifications', [
         'destination' => 'not-an-email',
     ]);
+});
+
+
+it('returns a specific notification', function () {
+    // Criar uma notificação de exemplo no banco de dados
+    $notification = Notification::factory()->create();
+
+    $URL = '/api/v1/notifications/' . $notification->id;
+
+    $response = $this->getJson($URL);
+
+    $response->assertStatus(Response::HTTP_OK)
+        ->assertJson([
+            'data' => [
+                'id' => $response['data']['id'],
+                'send_at' => $response['data']['send_at'],
+                'destination' => $response['data']['destination'],
+                'message' => $response['data']['message'],
+                'created_at' => $response['data']['created_at'],
+                'updated_at' => $response['data']['updated_at'],
+                'status_label' => $response['data']['status_label'],
+                'channel_label' => $response['data']['channel_label'],
+            ]
+        ]);
+});
+
+
+it('returns 404 when notification does not exist', function () {
+    $nonExistentId = 9999;
+
+    $URL = '/api/v2/notifications/' . $nonExistentId;
+
+    $response = $this->getJson($URL);
+
+    $response->assertStatus(Response::HTTP_NOT_FOUND);
 });
