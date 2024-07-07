@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Enums\NotificationChannelEnum;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class NotificationRequest extends FormRequest
 {
@@ -28,9 +29,14 @@ class NotificationRequest extends FormRequest
 
         return [
             'send_at' => ['required', 'date'],
-            'destination' => ['required', 'string', 'max:255'],
-            'message' => ['required'],
             'channel' => ['required', 'string', 'in:' . implode(',', $validChannels)],
+            'message' => ['required'],
+            'destination' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::when($this->channel === 'EMAIL', ['email'])
+            ],
         ];
     }
 }
