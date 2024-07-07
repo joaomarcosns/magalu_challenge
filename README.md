@@ -67,7 +67,7 @@ We greatly appreciate your willingness to participate in our selection process a
 
 |Testes|Validations|SMS Channel|PUSH Channel| Whatsapp Channel|
 |---|---|---|---|---|
-|&#x2610;|&#x2610;|&#x2610;|&#x2610;|&#x2610;|
+|&check;|&check;|&#x2610;|&#x2610;|&#x2610;|
 
 ### References
 
