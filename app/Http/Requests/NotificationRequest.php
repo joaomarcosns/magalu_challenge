@@ -37,7 +37,15 @@ class NotificationRequest extends FormRequest
                 'max:255',
                 Rule::when($this->channel === 'EMAIL', ['email']),
                 Rule::when($this->channel === 'SMS', ['regex:/^\+?[1-9]\d{1,14}$/']),
-                Rule::when($this->channel === 'WHATSAPP', ['regex:/^\+?[1-9]\d{1,14}$/'])
+                Rule::when($this->channel === 'WHATSAPP', ['regex:/^\+?[1-9]\d{1,14}$/']),
+                Rule::when($this->channel === 'PUSH', [
+                    'min:5',
+                    function ($attribute, $value, $fail) {
+                        if (preg_match('/^[a-zA-Z0-9:_-]{140,255}$/', $value)) {
+                            $fail('The ' . $attribute . ' must not be a valid Firebase Cloud Messaging token.');
+                        }
+                    },
+                ]),
             ],
         ];
     }

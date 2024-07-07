@@ -192,6 +192,56 @@ it('creates a notification WHATSAPP channel successfully', function () {
     ]);
 });
 
+it('fails to create a notification when channel is PUSH and destination is not a valid phone number', function () {
+    $URL = '/api/v1/notifications';
+
+    $data = [
+        'send_at' => now()->addDay()->toDateTimeString(),
+        'destination' => '0', // Invalid push token
+        'message' => 'Test Message',
+        'channel' => NotificationChannelEnum::PUSH->name,
+    ];
+
+    $response = $this->postJson($URL, $data);
+
+    $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+        ->assertJson(
+            fn (AssertableJson $json) =>
+            $json->has('errors.destination')
+                ->where('errors.destination.0', 'The destination field must be at least 5 characters.')
+                ->etc()
+        );
+});
+
+it('creates a notification PUSH channel successfully', function () {
+    $URL = '/api/v1/notifications';
+    $faker = Faker::create();
+
+    $data = [
+        'send_at' => now()->addDay()->toDateTimeString(),
+        'destination' => $faker->uuid(),
+        'message' => 'Test Message',
+        'channel' => NotificationChannelEnum::PUSH->name
+    ];
+
+    $response = $this->postJson($URL, $data);
+
+    $response->assertStatus(Response::HTTP_CREATED)
+        ->assertJson(
+            fn (AssertableJson $json) =>
+            $json->where('message', 'Notificação criada com sucesso')
+                ->etc()
+        );
+
+    $this->assertDatabaseHas('notifications', [
+        'send_at' => $data['send_at'],
+        'destination' => $data['destination'],
+        'message' => $data['message'],
+        'channel' => NotificationChannelEnum::PUSH->value,
+        'status' => NotificationStatusEnum::PENDING->value,
+    ]);
+});
+
 it('fails to create a notification with invalid data', function () {
     $URL = '/api/v1/notifications';
 
