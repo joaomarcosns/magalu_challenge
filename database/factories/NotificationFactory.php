@@ -18,16 +18,26 @@ class NotificationFactory extends Factory
      */
     public function definition(): array
     {
+        // Defina o canal aleatoriamente primeiro
+        $channel = $this->faker->randomElement([
+            NotificationChannelEnum::EMAIL,
+            NotificationChannelEnum::PUSH,
+            NotificationChannelEnum::SMS,
+            NotificationChannelEnum::WHATSAPP
+        ]);
+
+        // Defina o destino com base no canal selecionado
+        $destination = match ($channel) {
+            NotificationChannelEnum::EMAIL => $this->faker->email(),
+            NotificationChannelEnum::SMS, NotificationChannelEnum::WHATSAPP => $this->faker->phoneNumber(),
+            NotificationChannelEnum::PUSH => $this->faker->uuid(), // Gerar um token para PUSH
+        };
+
         return [
             'send_at' => $this->faker->dateTimeBetween('now', '+1 month'),
-            'destination' => $this->faker->email(),
+            'destination' => $destination,
             'message' => $this->faker->text(50),
-            'channel' => $this->faker->randomElement([
-                NotificationChannelEnum::EMAIL,
-                NotificationChannelEnum::PUSH,
-                NotificationChannelEnum::SMS,
-                NotificationChannelEnum::WHATSAPP
-            ]),
+            'channel' => $channel,
             'status' => $this->faker->randomElement([
                 NotificationStatusEnum::PENDING,
                 NotificationStatusEnum::SUCCESS,
